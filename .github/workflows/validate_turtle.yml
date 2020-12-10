@@ -20,8 +20,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: checkout to branch
-      - uses: actions/checkout@v2
-            
+        uses: actions/checkout@v2
+      
+      - working-directory: ./
+      
       - name: Install tools
         run: sudo apt-get install raptor2-utils
 
