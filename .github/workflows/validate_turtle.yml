@@ -26,10 +26,5 @@ jobs:
       - name: Build ontology
         run: ./create-ontology-ttl.sh
         
-      - name: start
-        run: echo "Start"
       - name: Validate ontology
-        run: find -type f -name "*.ttl" -not -path "./.git/*" -not -path "./examples/contracts-and-usage-policy/*"| sed 's/.*/"&"/'
-        
-      - name: status
-        run: echo "Done"
+        run: find -type f -name "*.ttl" -not -path "./.git/*" -not -path "./examples/contracts-and-usage-policy/*"| sed 's/.*/"&"/'  | xargs -n1 rapper -q -i turtle > /dev/null
