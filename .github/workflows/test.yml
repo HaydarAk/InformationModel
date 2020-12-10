@@ -22,3 +22,14 @@ jobs:
       
       - name: Install tools
         run: sudo apt-get install raptor2-utils
+
+      - name: Build ontology
+        run: ./create-ontology-ttl.sh
+        
+      - name: start
+        run: echo "Start"
+      - name: Validate ontology
+        run: find -type f -name "*.ttl" -not -path "./.git/*" -not -path "./examples/contracts-and-usage-policy/*"| sed 's/.*/"&"/'
+        
+      - name: status
+        run: echo "Done"
