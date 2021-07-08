@@ -14,18 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    
       - name: Cache Raptor
         uses: actions/cache@v2
-        id: cache-raptor2-utils
+        id: cache-raptor2
         with:
             path: "~/raptor2-utils"
-            key: ${{secrets.RAPTOR2_UTILS_VERSION}}
+            key: ${{secrets.RAPTOR2_VERSION}}
     
     
       - name: Install valgrind
         env:
-          CACHE_HIT: ${{steps.cache-raptor2-utils.outputs.cache-hit}}
+          CACHE_HIT: ${{steps.cache-raptor2.outputs.cache-hit}}
           RAPTOR2_UTILS_VERSION: ${{secrets.RAPTOR2_UTILS_VERSION}}
         run: |
             if [[ "$CACHE_HIT" == 'true' ]]; then
