@@ -1,4 +1,4 @@
-name: Validate-turtle
+name: validate turtle
 
 # Controls when the action will run. 
 on:
@@ -8,23 +8,17 @@ on:
     branches:
     - develop
   
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   validate:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     steps:
+      - name: install
+        run: sudo apt-get install raptor2-utils
+        
       - name: Checkout
         uses: actions/checkout@v2
-      
-      - name: Install tools
-        run: sudo apt-get install raptor2-utils
 
-      - name: Build ontology
-        run: ./create-ontology-ttl.sh
-        
       - name: Validate ontology
         run: find -type f -name "*.ttl" -not -path "./.git/*" -not -path "./examples/contracts-and-usage-policy/*"| sed 's/.*/"&"/'  | xargs -n1 rapper -q -i turtle > /dev/null
