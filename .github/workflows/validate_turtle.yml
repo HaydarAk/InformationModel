@@ -14,27 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Cache Raptor
-        uses: actions/cache@v2
-        id: cache-raptor2
-        with:
-            path: "~/raptor2-utils"
-            key: ${{secrets.RAPTOR2_VERSION}}
-    
-    
-      - name: Install valgrind
-        env:
-          CACHE_HIT: ${{steps.cache-raptor2.outputs.cache-hit}}
-          RAPTOR2_UTILS_VERSION: ${{secrets.RAPTOR2_UTILS_VERSION}}
-        run: |
-            if [[ "$CACHE_HIT" == 'true' ]]; then
-              sudo cp --verbose --force --recursive ~/raptor2-utils/* /
-            else
-              sudo apt-get install --yes raptor2-utils="$RAPTOR2_UTILS_VERSION"
-              mkdir -p ~/raptor2-utils
-              sudo dpkg -L raptor2-utils | while IFS= read -r f; do if test -f $f; then echo $f; fi; done | xargs cp --parents --target-directory ~/raptor2-utils/
-            fi
-            
+      - name: install
+        run: sudo apt-get install raptor2-utils
+        
       - name: Checkout
         uses: actions/checkout@v2
 
